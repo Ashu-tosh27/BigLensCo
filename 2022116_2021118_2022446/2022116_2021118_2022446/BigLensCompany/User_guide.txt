@@ -1,0 +1,47 @@
+Here's a compiled user guide for a user expected to use the interface of your Java program:
+
+User Guide for Admin Interface:
+
+1. Main Menu:
+   - Start the program to access the main menu.
+   - Choose between Admin or User roles.
+   - Admins enter email and password for full access.
+
+2. Manage Users (Admin Only):
+   - Add a new user with details like name, address, email, and password.
+   - Update existing user details or display a list of users.
+
+3. Order Items:
+   - View available items and their quantities.
+   - Place orders by entering product IDs and quantities.
+   - Navigate back to the main menu for additional actions.
+
+4. Manage Products (Admin Only):
+   - Add, update, or display product details like material, type, stock, etc.
+   - Ensure valid inputs for accurate product management.
+
+5. Manage Suppliers (Admin Only):
+   - Add new suppliers with relevant information.
+   - Display existing supplier details for reference.
+
+6. Inventory & Customer Analysis:
+   - Access inventory and customer analysis to view total products and customers.
+   - Analyze data for decision-making and business insights.
+
+7. Input Validation & Error Handling:
+   - Follow prompts and guidelines for input validation and error handling.
+   - Receive feedback on invalid entries or database connectivity issues.
+
+8. Efficient Navigation & Resource Management:
+   - Use numeric choices for navigation through menus.
+   - Ensure proper closure of resources after tasks are completed.
+
+9. Database Connectivity & Integrity:
+   - Configure MySQL database details for connectivity.
+   - Maintain data consistency and integrity for accurate records.
+
+10. Exit & Feedback:
+    - Exit the program when tasks are completed.
+    - Provide feedback on the user experience and any issues encountered for continuous improvement.
+
+Follow these guidelines for a smooth experience while managing users, products, orders, suppliers, and analyzing inventory and customer data within the Java program.

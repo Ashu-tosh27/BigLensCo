@@ -1,0 +1,368 @@
+-- BIG LENS COMPANY
+
+
+--  DROP DATABASE BigLensCompany;
+CREATE DATABASE BigLensCompany;
+Use BigLensCompany;
+
+
+
+
+CREATE TABLE users (
+user_id INT AUTO_INCREMENT PRIMARY KEY,
+user_first_name VARCHAR(50) NOT NULL,
+user_middle_name VARCHAR(50) NOT NULL,
+user_last_name VARCHAR(50) NOT NULL,
+user_address VARCHAR(255)  NOT NULL,
+user_email VARCHAR(50) NOT NULL ,
+user_password VARCHAR(50) NOT NULL
+);
+CREATE TABLE  product (
+product_id INT AUTO_INCREMENT PRIMARY KEY,
+frame_material VARCHAR(50) NOT NULL,
+lens_type VARCHAR(50) NOT NULL,
+power FLOAT(2) NOT NULL,
+stock_available INT NOT NULL,
+product_name  VARCHAR(50) NOT NULL,
+rated INT NOT NULL
+);
+CREATE TABLE   Rating (
+rating_id INT AUTO_INCREMENT PRIMARY KEY,
+user_id INT NOT NULL,
+product_id INT NOT NULL,
+rating ENUM( "1" ,"2","3","4","5")  NOT NULL,
+number_of_people INT NOT NULL,
+FOREIGN KEY (user_id) REFERENCES users(user_id),
+FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
+-- drop TABLE  shopping_cart;
+CREATE TABLE  shopping_cart (
+shopping_id INT AUTO_INCREMENT PRIMARY KEY,
+number_of_products INT NOT NULL,
+product_name VARCHAR(50) NOT NULL,
+product_id INT NOT NULL,
+user_id INT NOT NULL,
+FOREIGN KEY (product_id) REFERENCES product(product_id),
+FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+
+
+CREATE TABLE   supplier (
+sup_id INT AUTO_INCREMENT PRIMARY KEY,
+sup_first_name VARCHAR(50) NOT NULL,
+sup_middle_name VARCHAR(50) NOT NULL,
+sup_last_name VARCHAR(50) NOT NULL,
+sup_address VARCHAR(255)  NOT NULL,
+sup_email VARCHAR(50) NOT NULL,
+product_id INT NOT NULL,
+FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
+
+
+CREATE TABLE   transactions (
+transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+payment_mode VARCHAR(50) NOT NULL,
+user_id INT NOT NULL,
+product_id INT NOT NULL,
+FOREIGN KEY (user_id) REFERENCES users(user_id),
+FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
+
+
+CREATE TABLE   admin(
+admin_id INT AUTO_INCREMENT PRIMARY KEY,
+admin_first_name VARCHAR(50) NOT NULL,
+admin_middle_name VARCHAR(50) NOT NULL,
+admin_last_name VARCHAR(50) NOT NULL,
+admin_address VARCHAR(255)  NOT NULL,
+admin_email VARCHAR(50) NOT NULL,
+admin_password VARCHAR(50) NOT NULL
+);
+
+
+-- 15 entries for user
+INSERT INTO users (user_first_name, user_middle_name, user_last_name, user_address, user_email, user_password,user_id)
+VALUES
+('John', 'Doe', 'Smith', '123 Main St, City, State', 'john.doe@example.com', 'password1',1),
+('Jane', 'Ann', 'Doe', '456 Elm St, City, State', 'jane.doe@example.com', 'password2',2),
+('Michael', 'David', 'Johnson', '789 Oak St, City, State', 'michael.johnson@example.com', 'password3',3),
+('Alice', '', 'Brown', '321 Pine St, City, State', 'alice.brown@example.com', 'password4',4),
+('Bob', 'Andrew', 'Williams', '654 Maple St, City, State', 'bob.williams@example.com', 'password5',5),
+('Emily', 'Rose', 'Taylor', '987 Cedar St, City, State', 'emily.taylor@example.com', 'password6',6),
+('David', 'Lee', 'Jones', '135 Walnut St, City, State', 'david.jones@example.com', 'password7',7),
+('Sarah', '', 'Clark', '246 Cherry St, City, State', 'sarah.clark@example.com', 'password8',8),
+('Matthew', 'John', 'White', '579 Birch St, City, State', 'matthew.white@example.com', 'password9',9),
+('Jennifer', 'Marie', 'Davis', '864 Spruce St, City, State', 'jennifer.davis@example.com', 'password10',10),
+('Christopher', 'Paul', 'Martinez', '297 Poplar St, City, State', 'christopher.martinez@example.com', 'password11',11),
+('Amanda', '', 'Hernandez', '531 Ash St, City, State', 'amanda.hernandez@example.com', 'password12',12),
+('Joshua', 'Robert', 'Young', '972 Elmwood St, City, State', 'joshua.young@example.com', 'password13',13),
+('Ashley', 'Michelle', 'Lopez', '753 Birchwood St, City, State', 'ashley.lopez@example.com', 'password14',14),
+('James', 'Edward', 'Gonzalez', '624 Oakwood St, City, State', 'james.gonzalez@example.com', 'password15',15);
+
+
+-- 15 entries for product
+INSERT INTO product (frame_material, lens_type, power, stock_available, product_name, rated)
+VALUES
+('Plastic', 'Clear', 1.25, 10, 'Clear Plastic Glasses', 5),
+('Metal', 'Tinted', 2.00, 12, 'Tinted Metal Sunglasses', 4),
+('Plastic', 'Transitional', 1.75, 13, 'Transitional Plastic Glasses', 4),
+('Wood', 'Polarized', 1.50, 14, 'Polarized Wood Sunglasses', 5),
+('Metal', 'Clear', 2.50, 15, 'Clear Metal Glasses', 4),
+('Plastic', 'Tinted', 2.25, 23, 'Tinted Plastic Sunglasses', 4),
+('Metal', 'Transitional', 1.00, 23, 'Transitional Metal Glasses', 3),
+('Wood', 'Clear', 1.75, 23, 'Clear Wood Glasses', 5),
+('Plastic', 'Polarized', 1.50, 23, 'Polarized Plastic Sunglasses', 5),
+('Metal', 'Tinted', 2.75, 23, 'Tinted Metal Glasses', 4),
+('Plastic', 'Clear', 2.25, 23, 'Clear Plastic Sunglasses', 3),
+('Wood', 'Transitional', 1.25, 23, 'Transitional Wood Glasses', 4),
+('Metal', 'Polarized', 1.25, 23, 'Polarized Metal Sunglasses', 5),
+('Plastic', 'Tinted', 2.00, 23, 'Tinted Plastic Glasses', 4),
+('Wood', 'Clear', 2.50, 23, 'Clear Wood Sunglasses', 3);
+-- ('Plastic', 'Clear', 1.25, 10, 'Clear Plastic Glasses', 5),
+
+-- 15 entries for product
+INSERT INTO Rating (user_id, product_id, rating, number_of_people)
+VALUES
+(1, 1, '5', 100),
+(2, 2, '4', 120),
+(3, 3, '3', 80),
+(4, 4, '5', 150),
+(5, 5, '4', 110),
+(6, 6, '4', 90),
+(7, 7, '3', 130),
+(8, 8, '5', 140),
+(9, 9, '4', 100),
+(10, 10, '3', 120),
+(11, 11, '5', 130),
+(12, 12, '4', 110),
+(13, 13, '4', 90),
+(14, 14, '3', 120),
+(15, 15, '5', 140);
+
+
+INSERT INTO shopping_cart (number_of_products, product_name, product_id, user_id)
+VALUES
+(2, 'Clear Plastic Glasses', 1, 1),
+(1, 'Tinted Metal Sunglasses', 2, 1),
+(3, 'Transitional Plastic Glasses', 3, 2),
+(2, 'Polarized Wood Sunglasses', 4, 2),
+(1, 'Clear Metal Glasses', 5, 3),
+(2, 'Tinted Plastic Sunglasses', 6, 3),
+(3, 'Transitional Metal Glasses', 7, 4),
+(1, 'Clear Wood Glasses', 8, 4),
+(2, 'Polarized Plastic Sunglasses', 9, 5),
+(1, 'Tinted Metal Glasses', 10, 5),
+(3, 'Clear Plastic Sunglasses', 11, 6),
+(2, 'Transitional Wood Glasses', 12, 6),
+(1, 'Polarized Metal Sunglasses', 13, 7),
+(2, 'Tinted Plastic Glasses', 14, 7),
+(3, 'Clear Wood Sunglasses', 15, 8);
+
+
+
+INSERT INTO supplier (sup_first_name, sup_middle_name, sup_last_name, sup_address, sup_email, product_id)
+VALUES
+('Jack', 'Doe', 'Smith', '123 Main St, City, State', 'jack.doe@supplier.com', 1),
+('Jolly', 'Ann', 'Dean', '456 Elm St, City, State', 'jolly.dean@supplier.com', 2),
+('Mary', 'David', 'Jane', '789 Oak St, City, State', 'mary.jane@supplier.com', 3),
+('Alex', '', 'Bhola', '321 Pine St, City, State', 'alex.bhola@supplier.com', 4),
+('Asta', 'Andrew', 'Clover', '654 Maple St, City, State', 'asta.clover@supplier.com', 5),
+('Emma', 'Rose', 'Watson', '987 Cedar St, City, State', 'emma.watson@supplier.com', 6),
+('Daniel', 'Larusso', 'Jones', '135 Walnut St, City, State', 'daniel.jones@supplier.com', 7),
+('Saitama', '', 'Clark', '246 Cherry St, City, State', 'saitama.clark@supplier.com', 8),
+('Matthew', 'John', 'Perry', '579 Birch St, City, State', 'matthew.perry@supplier.com', 9),
+('Jayden', 'Marie', 'Samurai', '864 Spruce St, City, State', 'jayden.samurai@supplier.com', 10),
+('Christ', 'Paul', 'Nolan', '297 Poplar St, City, State', 'christ.nolan@supplier.com', 11),
+('Aman', '', 'Singh', '531 Ash St, City, State', 'aman.singh@supplier.com', 12),
+('Jerry', 'Robert', 'Tom', '972 Elmwood St, City, State', 'jerry.tom@supplier.com', 13),
+('Ash', 'Michelle', 'Ketchum', '753 Birchwood St, City, State', 'ash.ketchum@supplier.com', 14),
+('Harry', 'Edward', 'Potter', '624 Oakwood St, City, State', 'harry.potter@supplier.com', 15);
+
+
+INSERT INTO transactions (payment_mode, user_id, product_id)
+VALUES
+('Credit Card', 1, 1),
+('PayPal', 2, 2),
+('Debit Card', 3, 3),
+('Cash', 4, 4),
+('Credit Card', 5, 5),
+('PayPal', 6, 6),
+('Debit Card', 7, 7),
+('Cash', 8, 8),
+('Credit Card', 1, 9),
+('PayPal', 2, 10),
+('Debit Card', 3, 11),
+('Cash', 4, 12),
+('Credit Card', 5, 13),
+('PayPal', 6, 14),
+('Debit Card', 7, 15);
+
+
+
+
+INSERT INTO admin (admin_first_name, admin_middle_name, admin_last_name, admin_address, admin_email, admin_password)
+VALUES
+('Johny', 'Doe', 'Smith', '123 Main St, City, State', 'johny.doe@biglensco.com', 'asdblc1'),
+('Janeifer', 'Ann', 'Doe', '456 Elm St, City, State', 'janeifer.doe@biglensco.com', 'asdblc2'),
+('Michael', 'David', 'Jordon', '789 Oak St, City, State', 'michael.jordon@biglensco.com', 'asdblc3'),
+('Alicia', '', 'Brown', '321 Pine St, City, State', 'alicia.brown@biglensco.com', 'asdblc4'),
+('Boby', 'Andrew', 'Deol', '654 Maple St, City, State', 'boby.deol@biglensco.com', 'asdblc5'),
+('Emily', 'Swift', 'Taylor', '987 Cedar St, City, State', 'emily.taylor@biglensco.com', 'asdblc6'),
+('David', 'Willy', 'Jones', '135 Walnut St, City, State', 'david.jones@biglensco.com', 'asdblc7'),
+('Sarah', '', 'Khan', '246 Cherry St, City, State', 'sarah.khan@biglensco.com', 'asdblc8'),
+('Matthew', 'John', 'Hadden', '579 Birch St, City, State', 'matthew.hadden@biglensco.com', 'asdblc9'),
+('Jennifer', 'Marie', 'Lawrence', '864 Spruce St, City, State', 'jennifer.lawrence@biglensco.com', 'asdblc10');
+
+DELIMITER $$
+CREATE TRIGGER prevent_negative_stock BEFORE UPDATE ON product
+FOR EACH ROW
+BEGIN
+    IF NEW.stock_available < 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Stock cannot be negative';
+    END IF;
+END$$
+
+DELIMITER ;
+-- UPDATE product SET stock_available = -1 WHERE product_id = 1;-- for trigger
+DELIMITER $$
+
+CREATE TRIGGER prevent_negative_stock_insert BEFORE INSERT ON product
+FOR EACH ROW
+BEGIN
+    IF NEW.stock_available < 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Stock cannot be negative';
+    END IF;
+END$$
+
+
+DELIMITER ;
+-- INSERT INTO product (frame_material, lens_type, power, stock_available, product_name, rated)
+-- VALUES ('Plastic', 'Clear', 1.25, -1, 'Clear Plastic Glasses', 5);
+
+
+DELIMITER $$
+CREATE TRIGGER update_stock_after_transaction AFTER INSERT ON transactions
+FOR EACH ROW
+BEGIN
+    UPDATE product
+    SET stock_available = stock_available - (SELECT number_of_products FROM shopping_cart WHERE product_id = NEW.product_id)
+    WHERE product_id = NEW.product_id;
+END$$
+
+DELIMITER ;
+
+-- INSERT INTO transactions (payment_mode, user_id, product_id) VALUES ('Credit Card', 2, 3);
+
+
+-- --10SQL Queries
+
+SELECT DISTINCT u.*
+FROM users u
+JOIN transactions t ON u.user_id = t.user_id
+WHERE t.payment_mode = 'PayPal';
+
+
+SELECT p.product_name, AVG(r.rating) AS average_rating
+FROM product p
+JOIN Rating r ON p.product_id = r.product_id
+GROUP BY p.product_name;
+
+
+SELECT u.user_id, u.user_first_name, COUNT(sc.product_id) AS num_products_purchased
+FROM users u
+LEFT JOIN shopping_cart sc ON u.user_id = sc.user_id
+GROUP BY u.user_id;
+
+
+SELECT SUM(CASE WHEN t.payment_mode = 'Credit Card' THEN 1 ELSE 0 END) AS total_sales
+FROM transactions t;
+
+-- INSERT INTO Rating (user_id, product_id, rating, number_of_people) VALUES (1, 1, 11, 100);
+-- INSERT INTO shopping_cart (number_of_products, product_name, product_id,user_id) VALUES (2, 'Clear Plastic Glasses', 1,NULL); 
+
+
+SELECT s.*
+FROM supplier s
+JOIN product p ON s.product_id = p.product_id
+WHERE p.frame_material = 'Wood';
+
+
+SELECT payment_mode, COUNT(transaction_id) AS total_transactions, SUM(CASE WHEN payment_mode = 'Credit Card' THEN 1 ELSE 0 END) AS credit_card_sales,
+SUM(CASE WHEN payment_mode = 'PayPal' THEN 1 ELSE 0 END) AS paypal_sales,
+SUM(CASE WHEN payment_mode = 'Debit Card' THEN 1 ELSE 0 END) AS debit_card_sales,
+SUM(CASE WHEN payment_mode = 'Cash' THEN 1 ELSE 0 END) AS cash_sales
+FROM transactions
+GROUP BY payment_mode;
+
+
+SELECT u.*
+FROM users u
+LEFT JOIN transactions t ON u.user_id = t.user_id
+WHERE t.transaction_id IS NULL;
+
+
+SELECT p.*, s.sup_first_name, s.sup_last_name, s.sup_email
+FROM product p
+JOIN supplier s ON p.product_id = s.product_id
+WHERE p.stock_available = 0;
+
+
+SELECT p.*
+FROM product p
+JOIN shopping_cart sc ON p.product_id = sc.product_id
+WHERE sc.user_id = 1; -- Replace '1' with the desired user_id
+
+
+SELECT admin_email, admin_address
+FROM admin;
+
+
+-- Add a new product to the inventory
+START TRANSACTION;
+INSERT INTO product (frame_material, lens_type, power, stock_available, product_name, rated)
+VALUES ('Cosmic', 'Clear', 1.25, 500, 'Ibuprofen Glasses', 5);
+COMMIT;
+
+-- Update the address of a customer
+START TRANSACTION;
+UPDATE users
+SET user_address = '123 Old Delhi'
+WHERE user_id = 1;
+COMMIT;
+
+-- Add a new supplier to the database
+START TRANSACTION;
+INSERT INTO supplier (sup_first_name, sup_middle_name, sup_last_name, sup_address, sup_email, product_id)
+VALUES ('Emily', 'Anne', 'Johnson', '456 Elm St, City, State', 'emily.johnson@example.com', 10);
+COMMIT;
+
+
+-- Update the stock quantity of a product in the inventory
+START TRANSACTION;
+UPDATE product
+SET stock_available = stock_available - 6
+WHERE product_id = 2;
+COMMIT;
+
+-- conflicting ones
+START TRANSACTION;
+UPDATE product SET stock_available = stock_available - 3 WHERE product_id = 2;
+COMMIT;
+
+
+START TRANSACTION;
+UPDATE product SET stock_available = stock_available + 3 WHERE product_id = 2;
+COMMIT;
+
+-- Customer 1
+START TRANSACTION;
+INSERT INTO transactions (payment_mode, user_id, product_id) VALUES ('Credit Card', 1, 10);
+COMMIT;
+
+-- Customer 2
+START TRANSACTION;
+INSERT INTO transactions (payment_mode, user_id, product_id) VALUES ('Cash', 2, 10);
+COMMIT;
+
+

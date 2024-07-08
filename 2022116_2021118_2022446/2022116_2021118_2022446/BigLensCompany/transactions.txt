@@ -1,0 +1,49 @@
+non conflicting - 
+-- Add a new product to the inventory
+START TRANSACTION;
+INSERT INTO product (frame_material, lens_type, power, stock_available, product_name, rated)
+VALUES ('Cosmic', 'Clear', 1.25, 500, 'Ibuprofen Glasses', 5);
+COMMIT;
+
+-- Update the address of a customer
+START TRANSACTION;
+UPDATE users
+SET user_address = '123 Old Delhi'
+WHERE user_id = 1;
+COMMIT;
+
+-- Add a new supplier to the database
+START TRANSACTION;
+INSERT INTO supplier (sup_first_name, sup_middle_name, sup_last_name, sup_address, sup_email, product_id)
+VALUES ('Emily', 'Anne', 'Johnson', '456 Elm St, City, State', 'emily.johnson@example.com', 10);
+COMMIT;
+
+
+-- Update the stock quantity of a product in the inventory
+START TRANSACTION;
+UPDATE product
+SET stock_available = stock_available - 6
+WHERE product_id = 2;
+COMMIT;
+
+-- conflicting ones
+-- trying to update stock at same time
+START TRANSACTION;
+UPDATE product SET stock_available = stock_available - 3 WHERE product_id = 2;
+COMMIT;
+
+
+START TRANSACTION;
+UPDATE product SET stock_available = stock_available + 3 WHERE product_id = 2;
+COMMIT;
+
+-- trying to buy at same time 
+-- Customer 1
+START TRANSACTION;
+INSERT INTO transactions (payment_mode, user_id, product_id) VALUES ('Credit Card', 1, 10);
+COMMIT;
+
+-- Customer 2
+START TRANSACTION;
+INSERT INTO transactions (payment_mode, user_id, product_id) VALUES ('Cash', 2, 10);
+COMMIT;
